@@ -21,17 +21,21 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             height: 100vh;
-            max-height: 2000px;
+            width: 100vw;
+            max-width: 412px;
+            max-height: 915px;
             color: white;
             overflow: hidden;
+            margin: 0 auto;
         }
 
         .container {
-            max-width: 100%;
+            max-width: 412px;
+            width: 100%;
             margin: 0 auto;
-            padding: 8px;
+            padding: 6px;
             height: 100vh;
-            max-height: 2000px;
+            max-height: 915px;
             display: flex;
             flex-direction: column;
         }
@@ -43,81 +47,81 @@
         }
 
         .header h1 {
-            font-size: 1.4em;
-            margin-bottom: 4px;
+            font-size: 1.2em;
+            margin-bottom: 3px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .level-info {
             background: rgba(255,255,255,0.1);
-            border-radius: 8px;
-            padding: 8px;
-            margin-bottom: 8px;
+            border-radius: 6px;
+            padding: 6px;
+            margin-bottom: 6px;
             backdrop-filter: blur(10px);
             flex-shrink: 0;
         }
 
         .level {
-            font-size: 0.9em;
+            font-size: 0.8em;
             font-weight: bold;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .xp-bar {
             background: rgba(0,0,0,0.2);
-            border-radius: 6px;
-            height: 12px;
+            border-radius: 4px;
+            height: 10px;
             overflow: hidden;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .xp-fill {
             background: linear-gradient(90deg, #4CAF50, #8BC34A);
             height: 100%;
             transition: width 0.3s ease;
-            border-radius: 6px;
+            border-radius: 4px;
         }
 
         .xp-text {
             text-align: center;
-            font-size: 0.7em;
+            font-size: 0.6em;
         }
 
         .streak {
             text-align: center;
-            font-size: 0.8em;
+            font-size: 0.7em;
             color: #FFD700;
         }
 
         .daily-approaches {
             text-align: center;
-            font-size: 0.8em;
+            font-size: 0.7em;
             color: #4CAF50;
             font-weight: bold;
         }
 
         .section {
             background: rgba(255,255,255,0.1);
-            border-radius: 8px;
-            padding: 8px;
-            margin-bottom: 6px;
+            border-radius: 6px;
+            padding: 6px;
+            margin-bottom: 4px;
             backdrop-filter: blur(10px);
             flex-shrink: 0;
         }
 
         .section h2 {
-            margin-bottom: 6px;
-            font-size: 0.9em;
+            margin-bottom: 4px;
+            font-size: 0.8em;
         }
 
         .quest-item {
             background: rgba(255,255,255,0.1);
-            border-radius: 6px;
-            padding: 6px;
-            margin-bottom: 4px;
+            border-radius: 4px;
+            padding: 4px;
+            margin-bottom: 3px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 0.8em;
+            font-size: 0.7em;
         }
 
         .quest-item:hover {
@@ -133,15 +137,15 @@
         .xp-button {
             background: linear-gradient(45deg, #FF6B6B, #FF8E53);
             border: none;
-            border-radius: 15px;
+            border-radius: 12px;
             color: white;
-            padding: 6px 10px;
-            margin: 2px;
+            padding: 4px 8px;
+            margin: 1px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.7em;
+            font-size: 0.6em;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
             -webkit-tap-highlight-color: transparent;
             -webkit-touch-callout: none;
             -webkit-user-select: none;
@@ -241,10 +245,10 @@
 
         .tab-container {
             display: flex;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             background: rgba(255,255,255,0.1);
-            border-radius: 8px;
-            padding: 3px;
+            border-radius: 6px;
+            padding: 2px;
             flex-shrink: 0;
         }
 
@@ -253,11 +257,11 @@
             background: none;
             border: none;
             color: white;
-            padding: 4px 2px;
-            border-radius: 6px;
+            padding: 3px 1px;
+            border-radius: 4px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 0.7em;
+            font-size: 0.6em;
             -webkit-tap-highlight-color: transparent;
             -webkit-touch-callout: none;
             -webkit-user-select: none;
@@ -390,6 +394,30 @@
 
     <script src="app.js"></script>
     <script>
+        // Click sound generator using Web Audio API
+        function playClickSound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1);
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.1);
+            } catch (e) {
+                // Fallback: silent if audio context fails
+                console.log('Audio not available');
+            }
+        }
+
         // Register Service Worker for PWA functionality
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
@@ -441,6 +469,9 @@
                 e.preventDefault();
                 e.stopPropagation();
                 e.target.style.opacity = '1'; // Reset visual feedback
+                
+                // Play click sound
+                playClickSound();
                 
                 // Trigger click
                 if (e.target.tagName === 'BUTTON') {

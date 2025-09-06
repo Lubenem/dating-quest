@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Dating Quest - Offline</title>
+    <meta name="theme-color" content="#764ba2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Dating Quest">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            color: white;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 10px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        .header h1 {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .level-info {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+            backdrop-filter: blur(10px);
+            flex-shrink: 0;
+        }
+
+        .level {
+            font-size: 1em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .xp-bar {
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            height: 15px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .xp-fill {
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .xp-text {
+            text-align: center;
+            font-size: 0.8em;
+        }
+
+        .streak {
+            text-align: center;
+            font-size: 1em;
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        .daily-approaches {
+            text-align: center;
+            font-size: 1em;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+            backdrop-filter: blur(10px);
+            flex-shrink: 0;
+        }
+
+        .section h2 {
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .quest-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 8px;
+            margin-bottom: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .quest-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .quest-item.completed {
+            background: rgba(76, 175, 80, 0.3);
+            text-decoration: line-through;
+        }
+
+        .xp-button {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            padding: 8px 12px;
+            margin: 3px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .xp-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .xp-button:active {
+            transform: translateY(0);
+        }
+
+        .randomizer {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .randomizer-button {
+            background: linear-gradient(45deg, #9C27B0, #E91E63);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .randomizer-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .randomizer-button:active {
+            transform: translateY(0);
+        }
+
+        .random-result {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tab-container {
+            display: flex;
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 3px;
+            flex-shrink: 0;
+        }
+
+        .tab {
+            flex: 1;
+            background: none;
+            border: none;
+            color: white;
+            padding: 6px 2px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.75em;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .tab.active {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .tab-content {
+            display: none;
+            flex: 1;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .tab-content.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .xp-log-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .achievement-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .achievement-item.unlocked {
+            background: rgba(255, 215, 0, 0.2);
+            border: 2px solid #FFD700;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 Dating Quest</h1>
+        </div>
+
+        <div class="level-info">
+            <div class="level">Level <span id="currentLevel">1</span>: <span id="levelName">Beginner</span></div>
+            <div class="xp-bar">
+                <div class="xp-fill" id="xpBar" style="width: 0%"></div>
+            </div>
+            <div class="xp-text"><span id="currentXP">0</span> / <span id="nextLevelXP">100</span> XP</div>
+            <div class="streak">🔥 Streak: <span id="streak">0</span> days</div>
+            <div class="daily-approaches">📊 Today's Approaches: <span id="dailyApproaches">0</span></div>
+        </div>
+
+        <div class="tab-container">
+            <button class="tab active" onclick="showTab('home')">🏠 Home</button>
+            <button class="tab" onclick="showTab('quests')">📋 Quests</button>
+            <button class="tab" onclick="showTab('randomizer')">🎲 Randomizer</button>
+            <button class="tab" onclick="showTab('log')">📊 Log</button>
+            <button class="tab" onclick="showTab('achievements')">🏆 Achievements</button>
+        </div>
+
+        <!-- Home Tab -->
+        <div id="home" class="tab-content active">
+            <div class="section">
+                <h2>Today's Quests</h2>
+                <div id="dailyQuests"></div>
+            </div>
+            
+            <div class="section">
+                <h2>Quick XP Actions</h2>
+                <button class="xp-button" onclick="addXP('eye_contact')">👁️ Eye Contact (+2 XP)</button>
+                <button class="xp-button" onclick="addXP('greeting')">👋 Greeting (+3 XP)</button>
+                <button class="xp-button" onclick="addXP('conversation')">💬 Start Conversation (+5 XP)</button>
+                <button class="xp-button" onclick="addXP('question')">❓ Ask Question (+6 XP)</button>
+                <button class="xp-button" onclick="addXP('laugh')">😄 Make Laugh (+8 XP)</button>
+                <button class="xp-button" onclick="addXP('compliment')">💝 Compliment (+8 XP)</button>
+                <button class="xp-button" onclick="addXP('ask_out')">💕 Ask Out (+10 XP)</button>
+                <button class="xp-button" onclick="addXP('get_number')">📱 Get Number (+15 XP)</button>
+                <button class="xp-button" onclick="addApproach()" style="background: linear-gradient(45deg, #4CAF50, #45a049);">📊 Add Approach</button>
+            </div>
+        </div>
+
+        <!-- Quests Tab -->
+        <div id="quests" class="tab-content">
+            <div class="section">
+                <h2>Daily Quests</h2>
+                <div id="questList"></div>
+            </div>
+        </div>
+
+        <!-- Randomizer Tab -->
+        <div id="randomizer" class="tab-content">
+            <div class="section">
+                <h2>🎲 Approach Randomizer</h2>
+                <div class="randomizer">
+                    <button class="randomizer-button" onclick="rollRandomizer()">Roll New Approach!</button>
+                    <div class="random-result" id="randomResult">
+                        Click the button to get a random approach style!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Log Tab -->
+        <div id="log" class="tab-content">
+            <div class="section">
+                <h2>XP Log</h2>
+                <div id="xpLog"></div>
+            </div>
+        </div>
+
+        <!-- Achievements Tab -->
+        <div id="achievements" class="tab-content">
+            <div class="section">
+                <h2>🏆 Achievements</h2>
+                <div id="achievementList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game data and logic (embedded for offline use)
+        class DatingQuest {
+            constructor() {
+                this.xp = this.loadXP();
+                this.level = this.calculateLevel();
+                this.streak = this.loadStreak();
+                this.dailyApproaches = this.loadDailyApproaches();
+                this.quests = this.loadQuests();
+                this.achievements = this.loadAchievements();
+                this.xpLog = this.loadXPLog();
+                this.randomizerPool = [
+                    "Direct approach: 'Hi, I noticed you and had to come say hello'",
+                    "Situational opener: Comment on something around you both",
+                    "Compliment approach: 'You have a great smile'",
+                    "Question opener: 'What's the best coffee here?'",
+                    "Playful tease: 'I bet you're trouble'",
+                    "Confident statement: 'I'm going to make you laugh'",
+                    "Mystery approach: 'I have a secret to tell you'",
+                    "Challenge approach: 'I dare you to guess my name'",
+                    "Story opener: 'You remind me of someone...'",
+                    "Honest approach: 'I'm usually not this forward, but...'"
+                ];
+                this.init();
+            }
+
+            loadXP() {
+                return parseInt(localStorage.getItem('datingQuestXP')) || 0;
+            }
+
+            saveXP() {
+                localStorage.setItem('datingQuestXP', this.xp.toString());
+            }
+
+            loadStreak() {
+                const lastDate = localStorage.getItem('datingQuestLastDate');
+                const today = new Date().toDateString();
+                if (lastDate === today) {
+                    return parseInt(localStorage.getItem('datingQuestStreak')) || 0;
+                } else if (lastDate === new Date(Date.now() - 86400000).toDateString()) {
+                    const currentStreak = parseInt(localStorage.getItem('datingQuestStreak')) || 0;
+                    return currentStreak + 1;
+                } else {
+                    return 0;
+                }
+            }
+
+            saveStreak() {
+                localStorage.setItem('datingQuestStreak', this.streak.toString());
+                localStorage.setItem('datingQuestLastDate', new Date().toDateString());
+            }
+
+            loadDailyApproaches() {
+                const lastDate = localStorage.getItem('datingQuestApproachDate');
+                const today = new Date().toDateString();
+                if (lastDate === today) {
+                    return parseInt(localStorage.getItem('datingQuestDailyApproaches')) || 0;
+                } else {
+                    return 0;
+                }
+            }
+
+            saveDailyApproaches() {
+                localStorage.setItem('datingQuestDailyApproaches', this.dailyApproaches.toString());
+                localStorage.setItem('datingQuestApproachDate', new Date().toDateString());
+            }
+
+            addApproach() {
+                this.dailyApproaches++;
+                this.saveDailyApproaches();
+                this.updateApproachCounter();
+            }
+
+            updateApproachCounter() {
+                document.getElementById('dailyApproaches').textContent = this.dailyApproaches;
+            }
+
+            calculateLevel() {
+                const levels = [
+                    { name: "Beginner", xp: 0 },
+                    { name: "Initiate", xp: 100 },
+                    { name: "Explorer", xp: 250 },
+                    { name: "Adventurer", xp: 500 },
+                    { name: "Challenger", xp: 1000 },
+                    { name: "Hero", xp: 2000 },
+                    { name: "Master", xp: 4000 },
+                    { name: "Legend", xp: 8000 },
+                    { name: "Epic", xp: 15000 }
+                ];
+
+                for (let i = levels.length - 1; i >= 0; i--) {
+                    if (this.xp >= levels[i].xp) {
+                        return i + 1;
+                    }
+                }
+                return 1;
+            }
+
+            getLevelInfo() {
+                const levels = [
+                    { name: "Beginner", xp: 0 },
+                    { name: "Initiate", xp: 100 },
+                    { name: "Explorer", xp: 250 },
+                    { name: "Adventurer", xp: 500 },
+                    { name: "Challenger", xp: 1000 },
+                    { name: "Hero", xp: 2000 },
+                    { name: "Master", xp: 4000 },
+                    { name: "Legend", xp: 8000 },
+                    { name: "Epic", xp: 15000 }
+                ];
+
+                const currentLevel = this.calculateLevel();
+                const currentLevelInfo = levels[currentLevel - 1];
+                const nextLevelInfo = levels[currentLevel] || { xp: currentLevelInfo.xp };
+
+                return {
+                    current: currentLevel,
+                    name: currentLevelInfo.name,
+                    currentXP: this.xp - currentLevelInfo.xp,
+                    nextLevelXP: nextLevelInfo.xp - currentLevelInfo.xp
+                };
+            }
+
+            addXP(action) {
+                const xpValues = {
+                    'eye_contact': 2,
+                    'greeting': 3,
+                    'conversation': 5,
+                    'question': 6,
+                    'laugh': 8,
+                    'compliment': 8,
+                    'ask_out': 10,
+                    'get_number': 15
+                };
+
+                const xpGained = xpValues[action] || 0;
+                this.xp += xpGained;
+                this.saveXP();
+
+                // Add to XP log
+                this.xpLog.unshift({
+                    action: action,
+                    xp: xpGained,
+                    timestamp: new Date().toLocaleString()
+                });
+
+                // Keep only last 50 entries
+                if (this.xpLog.length > 50) {
+                    this.xpLog = this.xpLog.slice(0, 50);
+                }
+
+                this.saveXPLog();
+
+                // Check for level up
+                const newLevel = this.calculateLevel();
+                if (newLevel > this.level) {
+                    this.level = newLevel;
+                    alert(`🎉 Level Up! You are now level ${this.level}!`);
+                }
+
+                this.updateDisplay();
+                this.checkAchievements();
+            }
+
+            loadQuests() {
+                const saved = localStorage.getItem('datingQuestQuests');
+                if (saved) {
+                    return JSON.parse(saved);
+                }
+                return this.generateDailyQuests();
+            }
+
+            generateDailyQuests() {
+                const questTemplates = [
+                    { text: "Make eye contact with 3 people", xp: 10, completed: false },
+                    { text: "Say hello to 2 strangers", xp: 15, completed: false },
+                    { text: "Start a conversation with someone new", xp: 25, completed: false },
+                    { text: "Ask someone an interesting question", xp: 20, completed: false },
+                    { text: "Make someone laugh", xp: 30, completed: false },
+                    { text: "Give a genuine compliment", xp: 20, completed: false },
+                    { text: "Ask someone out", xp: 50, completed: false },
+                    { text: "Get someone's number", xp: 75, completed: false }
+                ];
+
+                return questTemplates.slice(0, 3).map(quest => ({
+                    ...quest,
+                    id: Date.now() + Math.random()
+                }));
+            }
+
+            saveQuests() {
+                localStorage.setItem('datingQuestQuests', JSON.stringify(this.quests));
+            }
+
+            completeQuest(questId) {
+                const quest = this.quests.find(q => q.id === questId);
+                if (quest && !quest.completed) {
+                    quest.completed = true;
+                    this.addXP('quest_completion');
+                    this.saveQuests();
+                    this.updateDisplay();
+                }
+            }
+
+            loadAchievements() {
+                const saved = localStorage.getItem('datingQuestAchievements');
+                if (saved) {
+                    return JSON.parse(saved);
+                }
+                return [
+                    { id: 'first_approach', name: 'First Steps', description: 'Complete your first approach', unlocked: false },
+                    { id: 'level_5', name: 'Rising Star', description: 'Reach level 5', unlocked: false },
+                    { id: 'streak_7', name: 'Consistent', description: 'Maintain a 7-day streak', unlocked: false },
+                    { id: 'quest_master', name: 'Quest Master', description: 'Complete 10 quests', unlocked: false },
+                    { id: 'social_butterfly', name: 'Social Butterfly', description: 'Make 50 approaches', unlocked: false }
+                ];
+            }
+
+            saveAchievements() {
+                localStorage.setItem('datingQuestAchievements', JSON.stringify(this.achievements));
+            }
+
+            checkAchievements() {
+                let unlocked = false;
+
+                // First approach
+                if (this.dailyApproaches >= 1 && !this.achievements.find(a => a.id === 'first_approach').unlocked) {
+                    this.achievements.find(a => a.id === 'first_approach').unlocked = true;
+                    unlocked = true;
+                }
+
+                // Level 5
+                if (this.level >= 5 && !this.achievements.find(a => a.id === 'level_5').unlocked) {
+                    this.achievements.find(a => a.id === 'level_5').unlocked = true;
+                    unlocked = true;
+                }
+
+                // 7-day streak
+                if (this.streak >= 7 && !this.achievements.find(a => a.id === 'streak_7').unlocked) {
+                    this.achievements.find(a => a.id === 'streak_7').unlocked = true;
+                    unlocked = true;
+                }
+
+                if (unlocked) {
+                    this.saveAchievements();
+                    this.updateDisplay();
+                }
+            }
+
+            loadXPLog() {
+                const saved = localStorage.getItem('datingQuestXPLog');
+                return saved ? JSON.parse(saved) : [];
+            }
+
+            saveXPLog() {
+                localStorage.setItem('datingQuestXPLog', JSON.stringify(this.xpLog));
+            }
+
+            rollRandomizer() {
+                const randomIndex = Math.floor(Math.random() * this.randomizerPool.length);
+                const result = this.randomizerPool[randomIndex];
+                document.getElementById('randomResult').textContent = result;
+            }
+
+            updateDisplay() {
+                const levelInfo = this.getLevelInfo();
+                
+                document.getElementById('currentLevel').textContent = levelInfo.current;
+                document.getElementById('levelName').textContent = levelInfo.name;
+                document.getElementById('currentXP').textContent = levelInfo.currentXP;
+                document.getElementById('nextLevelXP').textContent = levelInfo.nextLevelXP;
+                document.getElementById('xpBar').style.width = `${(levelInfo.currentXP / levelInfo.nextLevelXP) * 100}%`;
+                document.getElementById('streak').textContent = this.streak;
+                document.getElementById('dailyApproaches').textContent = this.dailyApproaches;
+
+                this.updateQuests();
+                this.updateXPLog();
+                this.updateAchievements();
+            }
+
+            updateQuests() {
+                const dailyQuestsDiv = document.getElementById('dailyQuests');
+                const questListDiv = document.getElementById('questList');
+                
+                const questHTML = this.quests.map(quest => `
+                    <div class="quest-item ${quest.completed ? 'completed' : ''}" onclick="game.completeQuest(${quest.id})">
+                        ${quest.text} (+${quest.xp} XP)
+                    </div>
+                `).join('');
+
+                dailyQuestsDiv.innerHTML = questHTML;
+                questListDiv.innerHTML = questHTML;
+            }
+
+            updateXPLog() {
+                const xpLogDiv = document.getElementById('xpLog');
+                const logHTML = this.xpLog.map(entry => `
+                    <div class="xp-log-item">
+                        <strong>${entry.action.replace('_', ' ').toUpperCase()}</strong> - +${entry.xp} XP<br>
+                        <small>${entry.timestamp}</small>
+                    </div>
+                `).join('');
+                xpLogDiv.innerHTML = logHTML;
+            }
+
+            updateAchievements() {
+                const achievementListDiv = document.getElementById('achievementList');
+                const achievementHTML = this.achievements.map(achievement => `
+                    <div class="achievement-item ${achievement.unlocked ? 'unlocked' : ''}">
+                        <strong>${achievement.name}</strong><br>
+                        ${achievement.description}
+                        ${achievement.unlocked ? ' ✅' : ' 🔒'}
+                    </div>
+                `).join('');
+                achievementListDiv.innerHTML = achievementHTML;
+            }
+
+            init() {
+                this.updateDisplay();
+                this.updateApproachCounter();
+            }
+        }
+
+        // Global functions
+        let game;
+
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            document.querySelector(`[onclick="showTab('${tabName}')"]`).classList.add('active');
+        }
+
+        function addXP(action) {
+            game.addXP(action);
+        }
+
+        function addApproach() {
+            game.addApproach();
+        }
+
+        function rollRandomizer() {
+            game.rollRandomizer();
+        }
+
+        // Touch event handling
+        function handleTouchStart(e) {
+            if (e.target.classList.contains('xp-button') || 
+                e.target.classList.contains('randomizer-button') ||
+                e.target.classList.contains('tab') ||
+                e.target.classList.contains('quest-item')) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.target.style.opacity = '0.7';
+            }
+        }
+
+        function handleTouchEnd(e) {
+            if (e.target.classList.contains('xp-button') || 
+                e.target.classList.contains('randomizer-button') ||
+                e.target.classList.contains('tab') ||
+                e.target.classList.contains('quest-item')) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.target.style.opacity = '1';
+                
+                // Trigger click
+                if (e.target.onclick) {
+                    e.target.onclick();
+                } else if (e.target.classList.contains('quest-item')) {
+                    // Handle quest completion
+                    const questId = e.target.getAttribute('onclick').match(/game\.completeQuest\(([^)]+)\)/);
+                    if (questId) {
+                        game.completeQuest(parseInt(questId[1]));
+                    }
+                } else if (e.target.classList.contains('tab')) {
+                    // Handle tab click
+                    const tabName = e.target.getAttribute('onclick').match(/showTab\('([^']+)'\)/);
+                    if (tabName) {
+                        showTab(tabName[1]);
+                    }
+                }
+            }
+        }
+
+        // Initialize the game
+        document.addEventListener('DOMContentLoaded', function() {
+            game = new DatingQuest();
+            
+            // Add touch event listeners
+            document.addEventListener('touchstart', handleTouchStart, { passive: false });
+            document.addEventListener('touchend', handleTouchEnd, { passive: false });
+        });
+    </script>
+</body>
+</html>
