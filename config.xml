@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="com.datingquest.app" version="1.0.0">
+    <name>Dating Quest</name>
+    <description>A gamified approach to dating and social interactions</description>
+    <author email="support@datingquest.com" href="https://datingquest.com">Dating Quest Team</author>
+    <content src="index.html"/>
+    <access origin="*"/>
+    <allow-intent href="http://*/*"/>
+    <allow-intent href="https://*/*"/>
+    <platform name="android">
+        <allow-intent href="market:*"/>
+    </platform>
+    <preference name="DisallowOverscroll" value="true"/>
+    <preference name="android-minSdkVersion" value="19"/>
+    <preference name="android-targetSdkVersion" value="29"/>
+    <preference name="Orientation" value="portrait"/>
+    <icon src="icon-192.png"/>
+</widget>

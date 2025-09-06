@@ -1,0 +1,27 @@
+{
+  "name": "Dating Quest",
+  "short_name": "DatingQuest",
+  "description": "A gamified approach to dating and social interactions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#764ba2",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiBmaWxsPSIjNjY3ZWVhIi8+CjxjaXJjbGUgY3g9Ijk2IiBjeT0iOTYiIHI9IjU4IiBmaWxsPSIjNzY0YmEyIi8+CjxjaXJjbGUgY3g9IjcwIiBjeT0iODAiIHI9IjEwIiBmaWxsPSJ3aGl0ZSIvPgo8Y2lyY2xlIGN4PSIxMjIiIGN5PSI4MCIgcj0iMTAiIGZpbGw9IndoaXRlIi8+CjxjaXJjbGUgY3g9IjcwIiBjeT0iMTEyIiByPSIxMCIgZmlsbD0id2hpdGUiLz4KPGNpcmNsZSBjeD0iMTIyIiBjeT0iMTEyIiByPSIxMCIgZmlsbD0id2hpdGUiLz4KPHN2ZyB4PSI4MCIgeT0iMTQwIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiPgo8dGV4dCB4PSIxNiIgeT0iMjAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPuKdpDwvdGV4dD4KPC9zdmc+Cjwvc3ZnPgo=",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiBmaWxsPSIjNjY3ZWVhIi8+CjxjaXJjbGUgY3g9IjI1NiIgY3k9IjI1NiIgcj0iMTU0IiBmaWxsPSIjNzY0YmEyIi8+CjxjaXJjbGUgY3g9IjE4NiIgY3k9IjIxMyIgcj0iMjciIGZpbGw9IndoaXRlIi8+CjxjaXJjbGUgY3g9IjMyNiIgY3k9IjIxMyIgcj0iMjciIGZpbGw9IndoaXRlIi8+CjxjaXJjbGUgY3g9IjE4NiIgY3k9IjI5OSIgcj0iMjciIGZpbGw9IndoaXRlIi8+CjxjaXJjbGUgY3g9IjMyNiIgY3k9IjI5OSIgcj0iMjciIGZpbGw9IndoaXRlIi8+CjxzdmcgeD0iMjEzIiB5PSIzNzMiIHdpZHRoPSI4NiIgaGVpZ2h0PSI4NiI+Cjx0ZXh0IHg9IjQzIiB5PSI1NCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjY0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+4p2kPC90ZXh0Pgo8L3N2Zz4KPC9zdmc+Cg==",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["games", "lifestyle", "social"],
+  "lang": "en",
+  "dir": "ltr"
+}
