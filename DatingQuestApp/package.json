@@ -1,0 +1,13 @@
+{
+  "name": "dating-quest",
+  "version": "1.0.0",
+  "description": "A gamified approach to dating and social interactions",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "serve": "python3 -m http.server 8000"
+  },
+  "keywords": ["dating", "game", "social", "gamification"],
+  "author": "Dating Quest Team",
+  "license": "MIT"
+}
