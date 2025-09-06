@@ -4,6 +4,7 @@ class DatingQuest {
         this.gameData = this.loadGameData();
         this.dailyApproaches = this.loadDailyApproaches();
         this.xpActions = {
+            'approach': { xp: 1, name: 'Approach' },
             'eye_contact_smile': { xp: 2, name: 'Make eye contact and smile' },
             'greeting': { xp: 3, name: 'Say hello / greeting' },
             'start_conversation': { xp: 5, name: 'Start a conversation' },
@@ -138,6 +139,24 @@ class DatingQuest {
         this.dailyApproaches++;
         this.saveDailyApproaches();
         this.updateApproachCounter();
+        
+        // Add XP for approach
+        this.addXP('approach', 1);
+        
+        // Add to XP log
+        this.gameData.xpLog.unshift({
+            action: 'Approach',
+            xp: 1,
+            timestamp: new Date().toLocaleTimeString()
+        });
+        
+        // Keep only last 50 entries
+        if (this.gameData.xpLog.length > 50) {
+            this.gameData.xpLog = this.gameData.xpLog.slice(0, 50);
+        }
+        
+        this.saveGameData();
+        this.updateDisplay();
     }
 
     updateApproachCounter() {

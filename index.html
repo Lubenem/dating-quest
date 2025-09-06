@@ -60,7 +60,7 @@
         }
 
         .header h1 {
-            font-size: calc(1.4em * var(--font-multiplier));
+            font-size: 1.2em;
             margin-bottom: 3px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
@@ -75,7 +75,7 @@
         }
 
         .level {
-            font-size: calc(1.0em * var(--font-multiplier));
+            font-size: 0.8em;
             font-weight: bold;
             margin-bottom: 3px;
         }
@@ -97,18 +97,18 @@
 
         .xp-text {
             text-align: center;
-            font-size: calc(0.8em * var(--font-multiplier));
+            font-size: 0.6em;
         }
 
         .streak {
             text-align: center;
-            font-size: calc(0.9em * var(--font-multiplier));
+            font-size: 0.7em;
             color: #FFD700;
         }
 
         .daily-approaches {
             text-align: center;
-            font-size: calc(0.9em * var(--font-multiplier));
+            font-size: 0.7em;
             color: #4CAF50;
             font-weight: bold;
         }
@@ -124,7 +124,7 @@
 
         .section h2 {
             margin-bottom: 4px;
-            font-size: calc(1.0em * var(--font-multiplier));
+            font-size: 0.8em;
         }
 
         .quest-item {
@@ -134,7 +134,7 @@
             margin-bottom: 3px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: calc(0.9em * var(--font-multiplier));
+            font-size: 0.7em;
         }
 
         .quest-item:hover {
@@ -156,7 +156,7 @@
             margin: calc(1px * var(--spacing-multiplier));
             cursor: pointer;
             font-weight: bold;
-            font-size: calc(0.8em * var(--font-multiplier));
+            font-size: 0.6em;
             transition: all 0.3s ease;
             box-shadow: 0 1px 4px rgba(0,0,0,0.2);
             -webkit-tap-highlight-color: transparent;
@@ -274,7 +274,7 @@
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: calc(0.8em * var(--font-multiplier));
+            font-size: 0.6em;
             -webkit-tap-highlight-color: transparent;
             -webkit-touch-callout: none;
             -webkit-user-select: none;
@@ -287,11 +287,61 @@
             background: rgba(255,255,255,0.2);
         }
 
+        .start-over-button {
+            background: linear-gradient(45deg, #ff4444, #cc0000);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            padding: 8px 16px;
+            margin: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .start-over-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
         .tab-content {
             display: none;
             flex: 1;
             overflow-y: auto;
             padding: 4px;
+            max-height: 400px;
+        }
+
+        .scrollable-content {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 4px;
+        }
+
+        .scrollable-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scrollable-content::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+        }
+
+        .scrollable-content::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+        }
+
+        .scrollable-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.5);
         }
 
         .tab-content.active {
@@ -334,6 +384,7 @@
             <div class="xp-text"><span id="currentXP">0</span> / <span id="nextLevelXP">50</span> XP</div>
             <div class="streak">🔥 Streak: <span id="streak">0</span> days</div>
             <div class="daily-approaches">📊 Today's Approaches: <span id="dailyApproaches">0</span></div>
+            <button class="start-over-button" onclick="startOver()">🔄 Start Over</button>
         </div>
 
         <div class="tab-container">
@@ -392,7 +443,9 @@
         <div id="log" class="tab-content">
             <div class="section">
                 <h2>XP Log</h2>
+                <div class="scrollable-content">
                 <div id="xpLog"></div>
+                </div>
             </div>
         </div>
 
@@ -400,7 +453,9 @@
         <div id="achievements" class="tab-content">
             <div class="section">
                 <h2>🏆 Achievements</h2>
+                <div class="scrollable-content">
                 <div id="achievementList"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -497,6 +552,55 @@
             console.log('Reset to default values');
         }
 
+        // Start Over function
+        function startOver() {
+            if (confirm('Are you sure you want to start over? This will reset all your progress!')) {
+                // Reset game data
+                game.gameData = {
+                    totalXP: 0,
+                    currentLevelXP: 0,
+                    level: 1,
+                    stats: {
+                        approach: 0,
+                        eye_contact_smile: 0,
+                        greeting: 0,
+                        start_conversation: 0,
+                        ask_question: 0,
+                        make_laugh: 0,
+                        compliment: 0,
+                        ask_out: 0,
+                        get_number: 0,
+                        long_conversation: 0,
+                        handle_rejection: 0,
+                        secure_date: 0,
+                        approach_group: 0,
+                        new_opener: 0,
+                        mass_approach: 0,
+                        conversations: 0
+                    },
+                    xpLog: [],
+                    dailyQuests: [],
+                    completedQuests: [],
+                    achievements: [],
+                    streak: 0,
+                    lastActiveDate: null
+                };
+                
+                // Reset daily approaches
+                game.dailyApproaches = 0;
+                
+                // Save and update display
+                game.saveGameData();
+                game.updateDisplay();
+                game.updateQuestList();
+                game.updateAchievements();
+                game.updateStreak();
+                game.updateApproachCounter();
+                
+                alert('Progress reset! You can start fresh now.');
+            }
+        }
+
         // Make functions globally available for testing
         window.testVerticalStretch = testVerticalStretch;
         window.testPaddingMultiplier = testPaddingMultiplier;
@@ -507,6 +611,7 @@
         window.testOpacityMultiplier = testOpacityMultiplier;
         window.testSpacingMultiplier = testSpacingMultiplier;
         window.resetToDefaults = resetToDefaults;
+        window.startOver = startOver;
 
         // Register Service Worker for PWA functionality
         if ('serviceWorker' in navigator) {
