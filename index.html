@@ -21,6 +21,11 @@
             --vertical-stretch: 1.0;
             --padding-multiplier: 1.0;
             --font-multiplier: 1.0;
+            --margin-multiplier: 1.0;
+            --border-radius-multiplier: 1.0;
+            --button-size-multiplier: 1.0;
+            --opacity-multiplier: 1.0;
+            --spacing-multiplier: 1.0;
         }
 
         body {
@@ -55,22 +60,22 @@
         }
 
         .header h1 {
-            font-size: 1.2em;
+            font-size: calc(1.2em * var(--font-multiplier));
             margin-bottom: 3px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .level-info {
-            background: rgba(255,255,255,0.1);
-            border-radius: 6px;
-            padding: 6px;
-            margin-bottom: 6px;
+            background: rgba(255,255,255,calc(0.1 * var(--opacity-multiplier)));
+            border-radius: calc(6px * var(--border-radius-multiplier));
+            padding: calc(6px * var(--padding-multiplier));
+            margin-bottom: calc(6px * var(--spacing-multiplier));
             backdrop-filter: blur(10px);
             flex-shrink: 0;
         }
 
         .level {
-            font-size: 0.8em;
+            font-size: calc(0.8em * var(--font-multiplier));
             font-weight: bold;
             margin-bottom: 3px;
         }
@@ -92,34 +97,34 @@
 
         .xp-text {
             text-align: center;
-            font-size: 0.6em;
+            font-size: calc(0.6em * var(--font-multiplier));
         }
 
         .streak {
             text-align: center;
-            font-size: 0.7em;
+            font-size: calc(0.7em * var(--font-multiplier));
             color: #FFD700;
         }
 
         .daily-approaches {
             text-align: center;
-            font-size: 0.7em;
+            font-size: calc(0.7em * var(--font-multiplier));
             color: #4CAF50;
             font-weight: bold;
         }
 
         .section {
-            background: rgba(255,255,255,0.1);
-            border-radius: 6px;
-            padding: 6px;
-            margin-bottom: 4px;
+            background: rgba(255,255,255,calc(0.1 * var(--opacity-multiplier)));
+            border-radius: calc(6px * var(--border-radius-multiplier));
+            padding: calc(6px * var(--padding-multiplier));
+            margin-bottom: calc(4px * var(--spacing-multiplier));
             backdrop-filter: blur(10px);
             flex-shrink: 0;
         }
 
         .section h2 {
             margin-bottom: 4px;
-            font-size: 0.8em;
+            font-size: calc(0.8em * var(--font-multiplier));
         }
 
         .quest-item {
@@ -129,7 +134,7 @@
             margin-bottom: 3px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 0.7em;
+            font-size: calc(0.7em * var(--font-multiplier));
         }
 
         .quest-item:hover {
@@ -145,13 +150,13 @@
         .xp-button {
             background: linear-gradient(45deg, #FF6B6B, #FF8E53);
             border: none;
-            border-radius: 12px;
+            border-radius: calc(12px * var(--border-radius-multiplier));
             color: white;
-            padding: 4px 8px;
-            margin: 1px;
+            padding: calc(4px * var(--button-size-multiplier)) calc(8px * var(--button-size-multiplier));
+            margin: calc(1px * var(--spacing-multiplier));
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.6em;
+            font-size: calc(0.6em * var(--font-multiplier));
             transition: all 0.3s ease;
             box-shadow: 0 1px 4px rgba(0,0,0,0.2);
             -webkit-tap-highlight-color: transparent;
@@ -269,7 +274,7 @@
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 0.6em;
+            font-size: calc(0.6em * var(--font-multiplier));
             -webkit-tap-highlight-color: transparent;
             -webkit-touch-callout: none;
             -webkit-user-select: none;
@@ -404,9 +409,14 @@
     <script>
         // UI Configuration - Adjust these values to fit your screen
         const UI_CONFIG = {
-            verticalStretch: 1.0,  // 1.0 = normal, 1.2 = 20% taller, 0.8 = 20% shorter
+            verticalStretch: 1.6,  // 1.0 = normal, 1.2 = 20% taller, 0.8 = 20% shorter
             paddingMultiplier: 1.0, // 1.0 = normal padding, 1.5 = more padding, 0.5 = less padding
-            fontMultiplier: 1.0    // 1.0 = normal font size, 1.2 = 20% larger, 0.8 = 20% smaller
+            fontMultiplier: 0.8,   // 1.0 = normal font size, 1.2 = 20% larger, 0.8 = 20% smaller
+            marginMultiplier: 1.0,  // 1.0 = normal margins, 1.5 = more space, 0.5 = tighter
+            borderRadiusMultiplier: 1.0, // 1.0 = normal rounded corners, 1.5 = more rounded, 0.5 = less rounded
+            buttonSizeMultiplier: 1.0,   // 1.0 = normal button size, 1.2 = bigger buttons, 0.8 = smaller
+            opacityMultiplier: 1.0,      // 1.0 = normal opacity, 0.8 = more transparent, 1.2 = more opaque
+            spacingMultiplier: 1.0       // 1.0 = normal spacing, 1.5 = more space between elements, 0.5 = tighter
         };
 
         // Apply UI configuration
@@ -414,6 +424,11 @@
             document.documentElement.style.setProperty('--vertical-stretch', UI_CONFIG.verticalStretch);
             document.documentElement.style.setProperty('--padding-multiplier', UI_CONFIG.paddingMultiplier);
             document.documentElement.style.setProperty('--font-multiplier', UI_CONFIG.fontMultiplier);
+            document.documentElement.style.setProperty('--margin-multiplier', UI_CONFIG.marginMultiplier);
+            document.documentElement.style.setProperty('--border-radius-multiplier', UI_CONFIG.borderRadiusMultiplier);
+            document.documentElement.style.setProperty('--button-size-multiplier', UI_CONFIG.buttonSizeMultiplier);
+            document.documentElement.style.setProperty('--opacity-multiplier', UI_CONFIG.opacityMultiplier);
+            document.documentElement.style.setProperty('--spacing-multiplier', UI_CONFIG.spacingMultiplier);
         }
 
         // Apply config on load
@@ -438,10 +453,60 @@
             console.log('Font multiplier set to:', value);
         }
 
+        function testMarginMultiplier(value) {
+            UI_CONFIG.marginMultiplier = value;
+            applyUIConfig();
+            console.log('Margin multiplier set to:', value);
+        }
+
+        function testBorderRadiusMultiplier(value) {
+            UI_CONFIG.borderRadiusMultiplier = value;
+            applyUIConfig();
+            console.log('Border radius multiplier set to:', value);
+        }
+
+        function testButtonSizeMultiplier(value) {
+            UI_CONFIG.buttonSizeMultiplier = value;
+            applyUIConfig();
+            console.log('Button size multiplier set to:', value);
+        }
+
+        function testOpacityMultiplier(value) {
+            UI_CONFIG.opacityMultiplier = value;
+            applyUIConfig();
+            console.log('Opacity multiplier set to:', value);
+        }
+
+        function testSpacingMultiplier(value) {
+            UI_CONFIG.spacingMultiplier = value;
+            applyUIConfig();
+            console.log('Spacing multiplier set to:', value);
+        }
+
+        // Reset to default values
+        function resetToDefaults() {
+            UI_CONFIG.verticalStretch = 1.0;
+            UI_CONFIG.paddingMultiplier = 1.0;
+            UI_CONFIG.fontMultiplier = 1.0;
+            UI_CONFIG.marginMultiplier = 1.0;
+            UI_CONFIG.borderRadiusMultiplier = 1.0;
+            UI_CONFIG.buttonSizeMultiplier = 1.0;
+            UI_CONFIG.opacityMultiplier = 1.0;
+            UI_CONFIG.spacingMultiplier = 1.0;
+            applyUIConfig();
+            console.log('Reset to default values');
+        }
+
         // Make functions globally available for testing
         window.testVerticalStretch = testVerticalStretch;
         window.testPaddingMultiplier = testPaddingMultiplier;
         window.testFontMultiplier = testFontMultiplier;
+        window.testMarginMultiplier = testMarginMultiplier;
+        window.testBorderRadiusMultiplier = testBorderRadiusMultiplier;
+        window.testButtonSizeMultiplier = testButtonSizeMultiplier;
+        window.testOpacityMultiplier = testOpacityMultiplier;
+        window.testSpacingMultiplier = testSpacingMultiplier;
+        window.resetToDefaults = resetToDefaults;
 
         // Register Service Worker for PWA functionality
         if ('serviceWorker' in navigator) {
