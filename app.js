@@ -160,11 +160,6 @@ class DatingQuest {
     }
 
     addXP(actionType, xp) {
-        // Play click sound
-        if (typeof playClickSound === 'function') {
-            playClickSound();
-        }
-        
         this.gameData.totalXP += xp;
         this.gameData.currentLevelXP += xp;
         

@@ -17,6 +17,12 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --vertical-stretch: 1.0;
+            --padding-multiplier: 1.0;
+            --font-multiplier: 1.0;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -27,13 +33,15 @@
             color: white;
             overflow: hidden;
             margin: 0 auto;
+            transform: scaleY(var(--vertical-stretch));
+            transform-origin: top;
         }
 
         .container {
             max-width: 412px;
             width: 100%;
             margin: 0 auto;
-            padding: 6px;
+            padding: calc(6px * var(--padding-multiplier));
             height: 100vh;
             max-height: 915px;
             display: flex;
@@ -394,29 +402,46 @@
 
     <script src="app.js"></script>
     <script>
-        // Click sound generator using Web Audio API
-        function playClickSound() {
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1);
-                
-                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-                
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.1);
-            } catch (e) {
-                // Fallback: silent if audio context fails
-                console.log('Audio not available');
-            }
+        // UI Configuration - Adjust these values to fit your screen
+        const UI_CONFIG = {
+            verticalStretch: 1.0,  // 1.0 = normal, 1.2 = 20% taller, 0.8 = 20% shorter
+            paddingMultiplier: 1.0, // 1.0 = normal padding, 1.5 = more padding, 0.5 = less padding
+            fontMultiplier: 1.0    // 1.0 = normal font size, 1.2 = 20% larger, 0.8 = 20% smaller
+        };
+
+        // Apply UI configuration
+        function applyUIConfig() {
+            document.documentElement.style.setProperty('--vertical-stretch', UI_CONFIG.verticalStretch);
+            document.documentElement.style.setProperty('--padding-multiplier', UI_CONFIG.paddingMultiplier);
+            document.documentElement.style.setProperty('--font-multiplier', UI_CONFIG.fontMultiplier);
         }
+
+        // Apply config on load
+        applyUIConfig();
+
+        // Test functions for UI adjustment
+        function testVerticalStretch(value) {
+            UI_CONFIG.verticalStretch = value;
+            applyUIConfig();
+            console.log('Vertical stretch set to:', value);
+        }
+
+        function testPaddingMultiplier(value) {
+            UI_CONFIG.paddingMultiplier = value;
+            applyUIConfig();
+            console.log('Padding multiplier set to:', value);
+        }
+
+        function testFontMultiplier(value) {
+            UI_CONFIG.fontMultiplier = value;
+            applyUIConfig();
+            console.log('Font multiplier set to:', value);
+        }
+
+        // Make functions globally available for testing
+        window.testVerticalStretch = testVerticalStretch;
+        window.testPaddingMultiplier = testPaddingMultiplier;
+        window.testFontMultiplier = testFontMultiplier;
 
         // Register Service Worker for PWA functionality
         if ('serviceWorker' in navigator) {
@@ -472,8 +497,6 @@
                 e.stopPropagation();
                 e.target.style.opacity = '1'; // Reset visual feedback
                 
-                // Play click sound
-                playClickSound();
                 
                 // Trigger click
                 if (e.target.tagName === 'BUTTON') {
